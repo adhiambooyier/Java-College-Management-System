@@ -4,6 +4,13 @@
  */
 package mizarusman.vgcsystem;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author user
@@ -26,10 +33,19 @@ public class vgcUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jOptionPanePolicy = new javax.swing.JOptionPane();
         lblVGC = new javax.swing.JLabel();
         lblLoginAs = new javax.swing.JLabel();
         cbLoginType = new javax.swing.JComboBox<>();
-        btnPolicy = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        lblPassword = new javax.swing.JLabel();
+        txtIdNumber = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        btnLogin = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        lblResearchEthics = new javax.swing.JLabel();
+        lblCurriculumPolicy = new javax.swing.JLabel();
+        lblStaff = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -39,42 +55,183 @@ public class vgcUI extends javax.swing.JFrame {
 
         cbLoginType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrator", "Faculty", "Student" }));
 
-        btnPolicy.setText("College Policies");
+        jLabel1.setText("ID Number");
+        jLabel1.setToolTipText("");
+
+        lblPassword.setText("Password");
+
+        txtIdNumber.setToolTipText("your student/staff number");
+
+        jTextField2.setToolTipText("your password");
+
+        btnLogin.setText("Login");
+
+        jLabel2.setText("College Policies: ");
+        jLabel2.setName("lblCollegePolicies"); // NOI18N
+
+        lblResearchEthics.setForeground(new java.awt.Color(0, 51, 204));
+        lblResearchEthics.setText("Research Ethics");
+        lblResearchEthics.setName(""); // NOI18N
+        lblResearchEthics.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblResearchEthicsMouseClicked(evt);
+            }
+        });
+
+        lblCurriculumPolicy.setForeground(new java.awt.Color(0, 51, 204));
+        lblCurriculumPolicy.setText("Curriculum Policy");
+        lblCurriculumPolicy.setName(""); // NOI18N
+        lblCurriculumPolicy.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCurriculumPolicyMouseClicked(evt);
+            }
+        });
+
+        lblStaff.setForeground(new java.awt.Color(0, 51, 204));
+        lblStaff.setText("Academic Staff");
+        lblStaff.setName(""); // NOI18N
+        lblStaff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblStaffMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(141, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblVGC)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(lblLoginAs))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnPolicy)
-                            .addComponent(cbLoginType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(129, 129, 129))
+                    .addComponent(lblPassword)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtIdNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(127, 127, 127))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblStaff)
+                .addGap(14, 14, 14)
+                .addComponent(lblCurriculumPolicy)
+                .addGap(18, 18, 18)
+                .addComponent(lblResearchEthics)
+                .addContainerGap(33, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbLoginType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(152, 152, 152))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblLoginAs)
+                .addGap(177, 177, 177))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblVGC)
+                .addGap(124, 124, 124))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogin)
+                .addGap(170, 170, 170))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(20, 20, 20)
                 .addComponent(lblVGC)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblLoginAs)
-                .addGap(13, 13, 13)
+                .addGap(18, 18, 18)
                 .addComponent(cbLoginType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
-                .addComponent(btnPolicy, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(12, 12, 12)
+                        .addComponent(lblPassword))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtIdNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
+                .addComponent(btnLogin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCurriculumPolicy)
+                    .addComponent(jLabel2)
+                    .addComponent(lblStaff)
+                    .addComponent(lblResearchEthics))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+        // this method will read the text files that contain policies
+
+    public String readFile(String path) {
+
+        // This will reference one line at a time
+        String line = null;
+
+        // This stores the contents of the textfile
+        String str = "";
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader
+                    = new FileReader(path);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader
+                    = new BufferedReader(fileReader);
+            
+            while ((line = bufferedReader.readLine()) != null) {
+                str += bufferedReader.readLine();
+            }
+
+            // Always close files.
+            bufferedReader.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println(
+                    "Unable to open file '"
+                    + path + "'");
+        } catch (IOException ex) {
+            System.out.println(
+                    "Error reading file '"
+                    + path + "'");
+            
+        }
+        return str;
+    }
+    
+    // shows staff policy on click
+    private void lblStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblStaffMouseClicked
+        JOptionPane optionPane = new NarrowOptionPane();
+        optionPane.setMessage(readFile("employee_code_of_conduct.txt"));
+        optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = optionPane.createDialog(null, "Width 100");
+        dialog.setVisible(true);
+    }//GEN-LAST:event_lblStaffMouseClicked
+
+    // shows curriculum policy on click
+    private void lblCurriculumPolicyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCurriculumPolicyMouseClicked
+                                              
+        JOptionPane optionPane = new NarrowOptionPane();
+        optionPane.setMessage(readFile("curriculum_policy.txt"));
+        optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = optionPane.createDialog(null, "Width 100");
+        dialog.setVisible(true);
+    }//GEN-LAST:event_lblCurriculumPolicyMouseClicked
+
+    private void lblResearchEthicsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblResearchEthicsMouseClicked
+        JOptionPane optionPane = new NarrowOptionPane();
+        optionPane.setMessage(readFile("research_ethics_policy.txt"));
+        optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = optionPane.createDialog(null, "Width 100");
+        dialog.setVisible(true);
+    }//GEN-LAST:event_lblResearchEthicsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -102,7 +259,7 @@ public class vgcUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(vgcUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-       // String[] userType = new String[] {"Administrator", "Faculty", "Student"};
+        // String[] userType = new String[] {"Administrator", "Faculty", "Student"};
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -113,9 +270,18 @@ public class vgcUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnPolicy;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JComboBox<String> cbLoginType;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JOptionPane jOptionPanePolicy;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lblCurriculumPolicy;
     private javax.swing.JLabel lblLoginAs;
+    private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblResearchEthics;
+    private javax.swing.JLabel lblStaff;
     private javax.swing.JLabel lblVGC;
+    private javax.swing.JTextField txtIdNumber;
     // End of variables declaration//GEN-END:variables
 }
