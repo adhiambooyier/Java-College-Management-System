@@ -8,10 +8,19 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import utilities.DbConnection;
 
 /**
  *
@@ -42,31 +51,37 @@ public class vgcUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
         txtIdNumber = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         lblResearchEthics = new javax.swing.JLabel();
         lblCurriculumPolicy = new javax.swing.JLabel();
         lblStaff = new javax.swing.JLabel();
+        lblMessage = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblVGC.setText("VIRTUAL GLOBAL COLLEGE");
+        lblVGC.setPreferredSize(new java.awt.Dimension(200, 20));
 
         lblLoginAs.setText("Login as:");
+        lblLoginAs.setPreferredSize(new java.awt.Dimension(200, 14));
 
-        cbLoginType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT", "Administrator", "Faculty", "Student" }));
+        cbLoginType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrator", "Faculty", "Student" }));
+        cbLoginType.setPreferredSize(new java.awt.Dimension(200, 20));
 
         jLabel1.setText("ID Number");
         jLabel1.setToolTipText("");
+        jLabel1.setPreferredSize(new java.awt.Dimension(200, 14));
 
         lblPassword.setText("Password");
+        lblPassword.setPreferredSize(new java.awt.Dimension(200, 14));
 
         txtIdNumber.setToolTipText("your student/staff number");
-
-        jTextField2.setToolTipText("your password");
+        txtIdNumber.setPreferredSize(new java.awt.Dimension(200, 20));
 
         btnLogin.setText("Login");
+        btnLogin.setPreferredSize(new java.awt.Dimension(200, 23));
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
@@ -108,64 +123,63 @@ public class vgcUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPassword)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtIdNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(127, 127, 127))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblStaff)
-                .addGap(14, 14, 14)
-                .addComponent(lblCurriculumPolicy)
-                .addGap(18, 18, 18)
-                .addComponent(lblResearchEthics)
-                .addContainerGap(33, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cbLoginType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(152, 152, 152))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblLoginAs)
-                .addGap(177, 177, 177))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblVGC)
-                .addGap(124, 124, 124))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogin)
-                .addGap(170, 170, 170))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblStaff)
+                        .addGap(14, 14, 14)
+                        .addComponent(lblCurriculumPolicy)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblResearchEthics)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(131, 131, 131)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                    .addComponent(lblVGC, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblLoginAs, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbLoginType, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(138, 138, 138)
+                                .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+                                .addGap(66, 66, 66)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtIdNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                                    .addComponent(txtPassword))))
+                        .addGap(10, 10, 10)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblVGC)
+                .addGap(22, 22, 22)
+                .addComponent(lblVGC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblLoginAs)
+                .addComponent(lblLoginAs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(cbLoginType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(12, 12, 12)
-                        .addComponent(lblPassword))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtIdNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(27, 27, 27)
-                .addComponent(btnLogin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtIdNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(lblMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 6, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCurriculumPolicy)
                     .addComponent(jLabel2)
@@ -173,6 +187,8 @@ public class vgcUI extends javax.swing.JFrame {
                     .addComponent(lblResearchEthics))
                 .addContainerGap())
         );
+
+        lblMessage.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -193,7 +209,7 @@ public class vgcUI extends javax.swing.JFrame {
             // Always wrap FileReader in BufferedReader.
             BufferedReader bufferedReader
                     = new BufferedReader(fileReader);
-            
+
             while ((line = bufferedReader.readLine()) != null) {
                 str += bufferedReader.readLine();
             }
@@ -208,11 +224,11 @@ public class vgcUI extends javax.swing.JFrame {
             System.out.println(
                     "Error reading file '"
                     + path + "'");
-            
+
         }
         return str;
     }
-    
+
     // shows staff policy on click
     private void lblStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblStaffMouseClicked
         JOptionPane optionPane = new NarrowOptionPane();
@@ -224,7 +240,7 @@ public class vgcUI extends javax.swing.JFrame {
 
     // shows curriculum policy on click
     private void lblCurriculumPolicyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCurriculumPolicyMouseClicked
-                                              
+
         JOptionPane optionPane = new NarrowOptionPane();
         optionPane.setMessage(readFile("curriculum_policy.txt"));
         optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -241,16 +257,59 @@ public class vgcUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblResearchEthicsMouseClicked
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        String cbLoginType = (String)this.cbLoginType.getSelectedItem();
-        if(cbLoginType.equals("Administrator")){
-            new AdministratorDashboard().setVisible(true);
-            this.dispose();
-        } else if(cbLoginType.equals("Faculty")){
-            new FacultyPortal().setVisible(true);
-            this.dispose();
-        }else if(cbLoginType.equals("Student")){
-            new StudentPortal().setVisible(true);
-            this.dispose();
+        String userID = txtIdNumber.getText().trim(), password = new String(txtPassword.getPassword());
+        // check that fields are not empty
+        if (!userID.isEmpty() && !password.isEmpty()) {
+
+            String sqlString = null;
+            JFrame nextWindow = null;
+
+            String cbLoginType = (String) this.cbLoginType.getSelectedItem();
+            switch (cbLoginType) {
+                case "Administrator":
+                    sqlString = "SELECT * FROM `administrators` WHERE `userID`=?";
+                    nextWindow = new AdministratorDashboard();
+                    break;
+                case "Faculty":
+                    sqlString = "SELECT * FROM `faculty` WHERE `userID`=?";
+                    nextWindow = new FacultyPortal();
+                    break;
+                case "Student":
+                    sqlString = "SELECT * FROM `faculty` WHERE `userID`=?";
+                    nextWindow = new StudentPortal();
+                    break;
+                default:
+                    break;
+            }
+
+            // invoke the db connection class
+            Connection conn = DbConnection.getConnection();
+
+            try {
+                if (sqlString != null && nextWindow != null) {
+                    // prepare sql query
+                    PreparedStatement preparedStatement = conn.prepareStatement(sqlString);
+                    preparedStatement.setString(1, userID);
+                    // execute the query
+                    ResultSet rs = preparedStatement.executeQuery();
+                    if (rs.first()) {
+                        if (password.equals(rs.getString("password"))) {
+                            lblMessage.setText("Login Successful.");
+                            nextWindow.setVisible(true);
+                            this.dispose();
+                        } else {
+                            lblMessage.setText("Error! Inavalid user or password");
+                        }
+                    } else {
+                        lblMessage.setText("Error! User not found.");
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(vgcUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            lblMessage.setText("You are missing a field!");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -258,7 +317,7 @@ public class vgcUI extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -273,13 +332,14 @@ public class vgcUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JOptionPane jOptionPanePolicy;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblCurriculumPolicy;
     private javax.swing.JLabel lblLoginAs;
+    private javax.swing.JLabel lblMessage;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblResearchEthics;
     private javax.swing.JLabel lblStaff;
     private javax.swing.JLabel lblVGC;
     private javax.swing.JTextField txtIdNumber;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
