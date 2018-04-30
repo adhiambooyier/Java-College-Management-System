@@ -4,6 +4,13 @@
  */
 package mizarusman.userinterface;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import utilities.DbConnection;
+
 /**
  *
  * @author user
@@ -40,6 +47,7 @@ public class StudentEnrollment extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         txtFee = new javax.swing.JTextField();
         btnEnroll = new javax.swing.JButton();
+        lblMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +78,11 @@ public class StudentEnrollment extends javax.swing.JFrame {
         txtFee.setPreferredSize(new java.awt.Dimension(200, 20));
 
         btnEnroll.setText("Enroll");
+        btnEnroll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnrollActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,7 +98,7 @@ public class StudentEnrollment extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -105,7 +118,10 @@ public class StudentEnrollment extends javax.swing.JFrame {
                                         .addComponent(txtFname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(214, 214, 214)
-                        .addComponent(btnEnroll)))
+                        .addComponent(btnEnroll))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(343, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -139,11 +155,44 @@ public class StudentEnrollment extends javax.swing.JFrame {
                     .addComponent(txtFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnEnroll)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
+        String fName = txtFname.getText().toString().trim(),
+                sName = txtSname.getText().trim(),
+                id = txtID.getText().toString().trim(), year = txtYear.getText().toString().trim(),
+                email = txtEmail.getText().toString().trim(), fee = txtFee.getText().toString().trim();
+
+        // check that the fields are not empty
+        if (!fName.isEmpty() && !sName.isEmpty() && !id.isEmpty() && !year.isEmpty() && !email.isEmpty() && !fee.isEmpty()) {
+
+            try {
+                // invoke the db connection class
+                Connection conn = DbConnection.getConnection();
+
+                PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO `students`(`userID`, `fname`, `lname`, `enrollmentYear`, `email`, `fee`) VALUES (?,?,?,?,?,?)");
+                preparedStatement.setString(1, id);
+                preparedStatement.setString(2, fName);
+                preparedStatement.setString(3, sName);
+                preparedStatement.setString(4, year);
+                preparedStatement.setString(5, email);
+                preparedStatement.setString(6, fee);
+                // execute the query
+                preparedStatement.executeUpdate();
+                lblMessage.setText("Student Added Successfully!");
+            } catch (SQLException ex) {
+                Logger.getLogger(CreateCourse.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            lblMessage.setText("You are missing some fields!");
+        }
+    }//GEN-LAST:event_btnEnrollActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,6 +238,7 @@ public class StudentEnrollment extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel lblBanner;
+    private javax.swing.JLabel lblMessage;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFee;
     private javax.swing.JTextField txtFname;

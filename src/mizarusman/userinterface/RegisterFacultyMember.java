@@ -178,6 +178,7 @@ public class RegisterFacultyMember extends javax.swing.JFrame {
             try {
                 // invoke the db connection class
                 Connection conn = DbConnection.getConnection();
+                
                 PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO `faculty`(`fname`, `lname`,`userID`) VALUES (?,?,?)");
                 preparedStatement.setString(1, fName);
                 preparedStatement.setString(2, sName);
