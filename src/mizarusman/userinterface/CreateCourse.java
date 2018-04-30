@@ -4,6 +4,14 @@
  */
 package mizarusman.userinterface;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import utilities.DbConnection;
+
 /**
  *
  * @author user
@@ -37,6 +45,7 @@ public class CreateCourse extends javax.swing.JFrame {
         txtaDescription = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         txtFee = new javax.swing.JTextField();
+        lblMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,10 +62,16 @@ public class CreateCourse extends javax.swing.JFrame {
         });
 
         btnCourse.setText("Create");
+        btnCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCourseActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Course Description");
 
         txtaDescription.setColumns(20);
+        txtaDescription.setLineWrap(true);
         txtaDescription.setRows(5);
         jScrollPane1.setViewportView(txtaDescription);
 
@@ -72,6 +87,10 @@ public class CreateCourse extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(145, 145, 145)
+                .addComponent(lblNewCourse)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCourse)
@@ -79,6 +98,9 @@ public class CreateCourse extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -100,10 +122,6 @@ public class CreateCourse extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(39, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(145, 145, 145)
-                .addComponent(lblNewCourse)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,6 +148,8 @@ public class CreateCourse extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addComponent(btnCourse)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -144,6 +164,31 @@ public class CreateCourse extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFeeActionPerformed
 
+    private void btnCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCourseActionPerformed
+        String code = txtCode.getText().toString().trim(),
+                title = txtTitle.getText().trim(), fee = txtFee.getText().toString().trim(),
+                description = txtaDescription.getText().toString().trim();
+        // check that the fields are not empty
+        if (!code.isEmpty() && !title.isEmpty() && !fee.isEmpty() && !description.isEmpty()) {
+            try {
+                // invoke the db connection class
+                Connection conn = DbConnection.getConnection();
+                PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO `courses`(`code`, `title`, `fee`, `description`) VALUES (?,?,?,?)");
+                preparedStatement.setString(1, code);
+                preparedStatement.setString(2, title);
+                preparedStatement.setString(3, fee);
+                preparedStatement.setString(4, description);
+                // execute the query
+                preparedStatement.executeUpdate();
+                lblMessage.setText("Course Added Successfully!");
+            } catch (SQLException ex) {
+                Logger.getLogger(CreateCourse.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            lblMessage.setText("You are missing some fields!");
+        }
+    }//GEN-LAST:event_btnCourseActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -155,7 +200,7 @@ public class CreateCourse extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -186,6 +231,7 @@ public class CreateCourse extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblMessage;
     private javax.swing.JLabel lblNewCourse;
     private javax.swing.JTextField txtCode;
     private javax.swing.JTextField txtFee;
