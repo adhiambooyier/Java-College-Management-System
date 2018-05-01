@@ -27,15 +27,23 @@ public class AdministratorDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        lblAllStudents = new javax.swing.JLabel();
         lblNewCourse = new javax.swing.JLabel();
         lblNewStudent = new javax.swing.JLabel();
         lblFees = new javax.swing.JLabel();
-        lblAllStudents = new javax.swing.JLabel();
         lblNewFaculty = new javax.swing.JLabel();
         lblNewTimetable = new javax.swing.JLabel();
         lblBanner = new javax.swing.JLabel();
 
         jButton1.setText("jButton1");
+
+        lblAllStudents.setForeground(new java.awt.Color(0, 51, 255));
+        lblAllStudents.setText("View Students");
+        lblAllStudents.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAllStudentsMouseClicked(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,9 +65,11 @@ public class AdministratorDashboard extends javax.swing.JFrame {
 
         lblFees.setForeground(new java.awt.Color(0, 51, 255));
         lblFees.setText("Fees Management");
-
-        lblAllStudents.setForeground(new java.awt.Color(0, 51, 255));
-        lblAllStudents.setText("View Students");
+        lblFees.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblFeesMouseClicked(evt);
+            }
+        });
 
         lblNewFaculty.setForeground(new java.awt.Color(0, 51, 255));
         lblNewFaculty.setText("Add Faculty Member");
@@ -88,9 +98,7 @@ public class AdministratorDashboard extends javax.swing.JFrame {
                     .addComponent(lblNewFaculty)
                     .addComponent(lblFees))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNewTimetable)
-                    .addComponent(lblAllStudents))
+                .addComponent(lblNewTimetable)
                 .addGap(64, 64, 64))
             .addGroup(layout.createSequentialGroup()
                 .addGap(109, 109, 109)
@@ -110,8 +118,7 @@ public class AdministratorDashboard extends javax.swing.JFrame {
                 .addGap(68, 68, 68)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNewStudent)
-                    .addComponent(lblFees)
-                    .addComponent(lblAllStudents))
+                    .addComponent(lblFees))
                 .addContainerGap(180, Short.MAX_VALUE))
         );
 
@@ -132,6 +139,16 @@ public class AdministratorDashboard extends javax.swing.JFrame {
         new StudentEnrollment().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblNewStudentMouseClicked
+
+    private void lblFeesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFeesMouseClicked
+         new FeesManagement().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblFeesMouseClicked
+
+    private void lblAllStudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAllStudentsMouseClicked
+         new ViewStudents().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblAllStudentsMouseClicked
 
     /**
      * @param args the command line arguments

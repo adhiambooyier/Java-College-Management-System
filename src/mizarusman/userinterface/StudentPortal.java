@@ -26,66 +26,80 @@ public class StudentPortal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        lblBanner = new javax.swing.JLabel();
+        lblRegister = new javax.swing.JLabel();
+        lblGradeBook = new javax.swing.JLabel();
+        lblViewCourses = new javax.swing.JLabel();
+        lblCalendar = new javax.swing.JLabel();
+        lblFname = new javax.swing.JLabel();
+        lblLname = new javax.swing.JLabel();
+        lblID = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Register Courses");
+        lblRegister.setText("Register Courses");
 
-        jLabel2.setText("Grade Book");
+        lblGradeBook.setText("Grade Book");
 
-        jLabel3.setText("Student Information");
+        lblViewCourses.setText("Manage your Courses");
 
-        jLabel4.setText("View your Courses");
+        lblCalendar.setText("Academic Calendar");
 
-        jLabel5.setText("Academic Calendar");
+        lblFname.setText("fname");
 
-        lblBanner.setText("Welcome to your Portal, student.");
+        lblLname.setText("sname");
+
+        lblID.setText("id");
+
+        lblEmail.setText("email");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel1)
-                .addGap(31, 31, 31)
-                .addComponent(jLabel4)
-                .addGap(32, 32, 32)
-                .addComponent(jLabel3)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblRegister)
+                        .addGap(31, 31, 31)
+                        .addComponent(lblViewCourses)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblCalendar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addComponent(lblGradeBook)))
+                .addContainerGap(28, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(73, 73, 73)
-                        .addComponent(jLabel5)
-                        .addGap(79, 79, 79))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblBanner)
-                        .addGap(102, 102, 102))))
+                    .addComponent(lblFname, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblLname, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                    .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(81, 81, 81))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(lblBanner)
-                .addGap(37, 37, 37)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
-                .addGap(55, 55, 55)
+                    .addComponent(lblFname, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLname, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblID, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                    .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5))
-                .addContainerGap(260, Short.MAX_VALUE))
+                    .addComponent(lblRegister)
+                    .addComponent(lblViewCourses)
+                    .addComponent(lblCalendar))
+                .addGap(18, 18, 18)
+                .addComponent(lblGradeBook)
+                .addContainerGap(234, Short.MAX_VALUE))
         );
 
         pack();
@@ -127,11 +141,13 @@ public class StudentPortal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel lblBanner;
+    private javax.swing.JLabel lblCalendar;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblFname;
+    private javax.swing.JLabel lblGradeBook;
+    private javax.swing.JLabel lblID;
+    private javax.swing.JLabel lblLname;
+    private javax.swing.JLabel lblRegister;
+    private javax.swing.JLabel lblViewCourses;
     // End of variables declaration//GEN-END:variables
 }
