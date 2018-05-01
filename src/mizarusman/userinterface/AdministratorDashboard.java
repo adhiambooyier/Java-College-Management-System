@@ -87,39 +87,39 @@ public class AdministratorDashboard extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblNewCourse)
-                    .addComponent(lblNewStudent))
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNewFaculty)
-                    .addComponent(lblFees))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(lblNewTimetable)
-                .addGap(64, 64, 64))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(109, 109, 109)
-                .addComponent(lblBanner)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lblNewCourse)
+                                        .addComponent(lblNewStudent))
+                                .addGap(38, 38, 38)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblNewFaculty)
+                                        .addComponent(lblFees))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                                .addComponent(lblNewTimetable)
+                                .addGap(64, 64, 64))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(109, 109, 109)
+                                .addComponent(lblBanner)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addComponent(lblBanner)
-                .addGap(79, 79, 79)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNewCourse)
-                    .addComponent(lblNewFaculty)
-                    .addComponent(lblNewTimetable))
-                .addGap(68, 68, 68)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNewStudent)
-                    .addComponent(lblFees))
-                .addContainerGap(180, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(82, 82, 82)
+                                .addComponent(lblBanner)
+                                .addGap(79, 79, 79)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblNewCourse)
+                                        .addComponent(lblNewFaculty)
+                                        .addComponent(lblNewTimetable))
+                                .addGap(68, 68, 68)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblNewStudent)
+                                        .addComponent(lblFees))
+                                .addContainerGap(180, Short.MAX_VALUE))
         );
 
         pack();
@@ -141,12 +141,12 @@ public class AdministratorDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNewStudentMouseClicked
 
     private void lblFeesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFeesMouseClicked
-         new FeesManagement().setVisible(true);
+        new FeesManagement().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblFeesMouseClicked
 
     private void lblAllStudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAllStudentsMouseClicked
-         new ViewStudents().setVisible(true);
+        new ViewStudents().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblAllStudentsMouseClicked
 
