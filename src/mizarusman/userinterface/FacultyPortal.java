@@ -4,17 +4,24 @@
  */
 package mizarusman.userinterface;
 
+import java.sql.Connection;
+import utilities.DbConnection;
+
 /**
  *
  * @author user
  */
 public class FacultyPortal extends javax.swing.JFrame {
 
+    String userId;
+    Connection conn = DbConnection.getConnection();
+
     /**
-     * Creates new form StudentPortal
+     * Creates new form FacultyPortal
      */
-    public FacultyPortal() {
+    public FacultyPortal(String userID) {
         initComponents();
+        this.userId = userID;
     }
 
     /**
@@ -27,69 +34,69 @@ public class FacultyPortal extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        lblBanner = new javax.swing.JLabel();
+        lblStudents = new javax.swing.JLabel();
+        lblLessonPlan = new javax.swing.JLabel();
+        lblGradeBook = new javax.swing.JLabel();
+        lblCalendar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Manage Calendar");
+        jLabel1.setText("WELCOME TO YOUR PORTAL!");
 
-        jLabel2.setText("Grade Book");
+        lblStudents.setText("YOUR STUDENTS");
+        lblStudents.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblStudentsMouseClicked(evt);
+            }
+        });
 
-        jLabel3.setText("Your Students");
+        lblLessonPlan.setText("MANAGE COURSE LESSON PLAN");
 
-        jLabel4.setText("View your Courses");
+        lblGradeBook.setText("GRADE BOOK");
 
-        jLabel5.setText("Manage Course Lesson Plan");
-
-        lblBanner.setText("Welcome to your Portal, Professor.");
+        lblCalendar.setText("MANAGE ACADEMIIC CALENDAR");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel1)
-                .addGap(31, 31, 31)
-                .addComponent(jLabel4)
-                .addGap(32, 32, 32)
-                .addComponent(jLabel3)
-                .addContainerGap(53, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(88, Short.MAX_VALUE)
+                .addGap(118, 118, 118)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel5)
-                        .addGap(79, 79, 79))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblBanner)
-                        .addGap(102, 102, 102))))
+                    .addComponent(lblStudents, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGradeBook, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblLessonPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(lblBanner)
-                .addGap(37, 37, 37)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
-                .addGap(55, 55, 55)
+                    .addComponent(lblStudents, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLessonPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5))
-                .addContainerGap(260, Short.MAX_VALUE))
+                    .addComponent(lblGradeBook, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lblStudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblStudentsMouseClicked
+        new StudentsByCourse(userId).setVisible(true);
+    }//GEN-LAST:event_lblStudentsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -117,22 +124,15 @@ public class FacultyPortal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(FacultyPortal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FacultyPortal().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel lblBanner;
+    private javax.swing.JLabel lblCalendar;
+    private javax.swing.JLabel lblGradeBook;
+    private javax.swing.JLabel lblLessonPlan;
+    private javax.swing.JLabel lblStudents;
     // End of variables declaration//GEN-END:variables
 }

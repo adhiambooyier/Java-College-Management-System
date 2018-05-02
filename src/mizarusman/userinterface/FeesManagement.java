@@ -18,12 +18,16 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import utilities.DbConnection;
+import utilities.Utils;
 
 /**
  *
  * @author user
  */
 public class FeesManagement extends javax.swing.JFrame {
+// invoke the db connection class
+
+    Connection conn = DbConnection.getConnection();
 
     /**
      * Creates new form FeesManagement
@@ -32,13 +36,11 @@ public class FeesManagement extends javax.swing.JFrame {
         initComponents();
 
         try {
-            // invoke the db connection class
-            Connection conn = DbConnection.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM `student_courses`");
             ResultSet rs = preparedStatement.executeQuery();
             // It creates and displays the table
             //JTable tblFees = new JTable(buildTableModel(rs));
-            tblFees.setModel(buildTableModel(rs));
+            tblFees.setModel(Utils.buildTableModel(rs));
             /* Create and display the form */
         } catch (SQLException ex) {
             Logger.getLogger(FeesManagement.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,7 +72,7 @@ public class FeesManagement extends javax.swing.JFrame {
         txtcode = new javax.swing.JTextField();
         lblMessage = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -189,12 +191,9 @@ public class FeesManagement extends javax.swing.JFrame {
                 amount = txtFee.getText().trim(),
                 code = txtcode.getText().trim();
 
-// check that the fields are not empty
+        // check that the fields are not empty
         if (!id.isEmpty() && !amount.isEmpty() && !code.isEmpty()) {
             try {
-                // invoke the db connection class
-                Connection conn = DbConnection.getConnection();
-
                 PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO `student_courses`(`studentID`, `courseCode`, `fees`) VALUES (?,?,?)");
                 preparedStatement.setString(1, id);
                 preparedStatement.setString(2, code);
@@ -207,7 +206,7 @@ public class FeesManagement extends javax.swing.JFrame {
                 ResultSet rs = preparedStatement.executeQuery();
                 // It creates and displays the table
                 //JTable tblFees = new JTable(buildTableModel(rs));
-                tblFees.setModel(buildTableModel(rs));
+                tblFees.setModel(Utils.buildTableModel(rs));
                 /* Create and display the form */
             } catch (SQLException ex) {
                 Logger.getLogger(CreateCourse.class.getName()).log(Level.SEVERE, null, ex);
@@ -267,29 +266,6 @@ public class FeesManagement extends javax.swing.JFrame {
         //</editor-fold>
     }
 
-    public static TableModel buildTableModel(ResultSet rs)
-            throws SQLException {
-        ResultSetMetaData metaData = rs.getMetaData();
-        // names of columns
-        Vector<String> columnNames = new Vector<String>();
-        int columnCount = metaData.getColumnCount();
-        for (int column = 1; column <= columnCount; column++) {
-            columnNames.add(metaData.getColumnName(column));
-        }
-
-        // data of the table
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-        while (rs.next()) {
-            Vector<Object> vector = new Vector<Object>();
-            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-                vector.add(rs.getObject(columnIndex));
-            }
-            data.add(vector);
-        }
-
-        return new DefaultTableModel(data, columnNames);
-
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
     private javax.persistence.EntityManager entityManager;

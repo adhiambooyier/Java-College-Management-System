@@ -45,7 +45,7 @@ public class AdministratorDashboard extends javax.swing.JFrame {
             }
         });
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblNewCourse.setForeground(new java.awt.Color(0, 51, 255));
         lblNewCourse.setText("Create Course");

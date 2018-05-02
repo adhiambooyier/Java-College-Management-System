@@ -49,7 +49,7 @@ public class StudentEnrollment extends javax.swing.JFrame {
         btnEnroll = new javax.swing.JButton();
         lblMessage = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("First Name");
 

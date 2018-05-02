@@ -47,7 +47,7 @@ public class CreateCourse extends javax.swing.JFrame {
         txtFee = new javax.swing.JTextField();
         lblMessage = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblNewCourse.setText("Create a New Course");
 

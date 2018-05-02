@@ -35,7 +35,7 @@ public class StudentPortal extends javax.swing.JFrame {
         lblID = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblRegister.setText("Register Courses");
 
