@@ -11,7 +11,7 @@ package mizarusman.userinterface;
 public class AdministratorDashboard extends javax.swing.JFrame {
 
     /**
-     * Creates new form AdministratorLogin
+     * Creates new form AdministratorDashboard
      */
     public AdministratorDashboard() {
         initComponents();
@@ -26,36 +26,34 @@ public class AdministratorDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        lblAllStudents = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         lblNewCourse = new javax.swing.JLabel();
+        lblNewFaculty = new javax.swing.JLabel();
         lblNewStudent = new javax.swing.JLabel();
         lblFees = new javax.swing.JLabel();
-        lblNewFaculty = new javax.swing.JLabel();
-        lblNewTimetable = new javax.swing.JLabel();
-        lblBanner = new javax.swing.JLabel();
+        lblMessage = new javax.swing.JLabel();
 
-        jButton1.setText("jButton1");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblAllStudents.setForeground(new java.awt.Color(0, 51, 255));
-        lblAllStudents.setText("View Students");
-        lblAllStudents.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblAllStudentsMouseClicked(evt);
-            }
-        });
+        jLabel1.setText("WELCOME TO YOUR ADMIN PANEL");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        lblNewCourse.setForeground(new java.awt.Color(0, 51, 255));
-        lblNewCourse.setText("Create Course");
+        lblNewCourse.setForeground(new java.awt.Color(0, 0, 255));
+        lblNewCourse.setText("Create course");
         lblNewCourse.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblNewCourseMouseClicked(evt);
             }
         });
 
-        lblNewStudent.setForeground(new java.awt.Color(0, 51, 255));
+        lblNewFaculty.setForeground(new java.awt.Color(0, 0, 255));
+        lblNewFaculty.setText("Add New Faculty Member");
+        lblNewFaculty.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblNewFacultyMouseClicked(evt);
+            }
+        });
+
+        lblNewStudent.setForeground(new java.awt.Color(0, 0, 255));
         lblNewStudent.setText("Enroll Student");
         lblNewStudent.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -63,7 +61,7 @@ public class AdministratorDashboard extends javax.swing.JFrame {
             }
         });
 
-        lblFees.setForeground(new java.awt.Color(0, 51, 255));
+        lblFees.setForeground(new java.awt.Color(0, 0, 255));
         lblFees.setText("Fees Management");
         lblFees.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -71,55 +69,48 @@ public class AdministratorDashboard extends javax.swing.JFrame {
             }
         });
 
-        lblNewFaculty.setForeground(new java.awt.Color(0, 51, 255));
-        lblNewFaculty.setText("Add Faculty Member");
-        lblNewFaculty.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblNewFacultyMouseClicked(evt);
-            }
-        });
-
-        lblNewTimetable.setForeground(new java.awt.Color(0, 51, 255));
-        lblNewTimetable.setText("Add Timetable");
-
-        lblBanner.setText("WELCOME TO YOUR ADMIN PANEL: ");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(lblNewCourse)
-                                        .addComponent(lblNewStudent))
-                                .addGap(38, 38, 38)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblNewFaculty)
-                                        .addComponent(lblFees))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                                .addComponent(lblNewTimetable)
-                                .addGap(64, 64, 64))
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(109, 109, 109)
-                                .addComponent(lblBanner)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(lblFees, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblNewCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblNewFaculty, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(lblNewStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(82, 82, 82)
-                                .addComponent(lblBanner)
-                                .addGap(79, 79, 79)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(lblNewCourse)
-                                        .addComponent(lblNewFaculty)
-                                        .addComponent(lblNewTimetable))
-                                .addGap(68, 68, 68)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(lblNewStudent)
-                                        .addComponent(lblFees))
-                                .addContainerGap(180, Short.MAX_VALUE))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNewCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNewFaculty, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNewStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblFees, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -144,11 +135,6 @@ public class AdministratorDashboard extends javax.swing.JFrame {
         new FeesManagement().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblFeesMouseClicked
-
-    private void lblAllStudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAllStudentsMouseClicked
-        new ViewStudents().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_lblAllStudentsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -176,7 +162,6 @@ public class AdministratorDashboard extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AdministratorDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -187,13 +172,11 @@ public class AdministratorDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel lblAllStudents;
-    private javax.swing.JLabel lblBanner;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblFees;
+    private javax.swing.JLabel lblMessage;
     private javax.swing.JLabel lblNewCourse;
     private javax.swing.JLabel lblNewFaculty;
     private javax.swing.JLabel lblNewStudent;
-    private javax.swing.JLabel lblNewTimetable;
     // End of variables declaration//GEN-END:variables
 }
