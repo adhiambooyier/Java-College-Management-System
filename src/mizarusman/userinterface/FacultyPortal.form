@@ -34,12 +34,12 @@
                   <Component id="lblStudents" min="-2" pref="105" max="-2" attributes="0"/>
                   <Component id="lblGradeBook" min="-2" pref="90" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="57" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblLessonPlan" min="-2" pref="169" max="-2" attributes="0"/>
-                  <Component id="lblCalendar" min="-2" pref="159" max="-2" attributes="0"/>
+              <EmptySpace pref="43" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="lblCalendar" pref="203" max="32767" attributes="0"/>
+                  <Component id="lblLessonPlan" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -71,7 +71,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblStudents">
       <Properties>
-        <Property name="text" type="java.lang.String" value="YOUR STUDENTS"/>
+        <Property name="text" type="java.lang.String" value="MY STUDENTS"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblStudentsMouseClicked"/>
