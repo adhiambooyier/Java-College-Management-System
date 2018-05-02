@@ -275,8 +275,8 @@ public class vgcUI extends javax.swing.JFrame {
                     nextWindow = new FacultyPortal(userID);
                     break;
                 case "Student":
-                    sqlString = "SELECT * FROM `faculty` WHERE `userID`=?";
-                    nextWindow = new StudentPortal();
+                    sqlString = "SELECT * FROM `students` WHERE `userID`=?";
+                    nextWindow = new StudentPortal(userID);
                     break;
                 default:
                     break;
