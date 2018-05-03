@@ -39,7 +39,6 @@ public class FeesManagement extends javax.swing.JFrame {
             PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM `student_courses`");
             ResultSet rs = preparedStatement.executeQuery();
             // It creates and displays the table
-            //JTable tblFees = new JTable(buildTableModel(rs));
             tblFees.setModel(Utils.buildTableModel(rs));
             /* Create and display the form */
         } catch (SQLException ex) {
@@ -194,10 +193,10 @@ public class FeesManagement extends javax.swing.JFrame {
         // check that the fields are not empty
         if (!id.isEmpty() && !amount.isEmpty() && !code.isEmpty()) {
             try {
-                PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO `student_courses`(`studentID`, `courseCode`, `fees`) VALUES (?,?,?)");
-                preparedStatement.setString(1, id);
-                preparedStatement.setString(2, code);
-                preparedStatement.setString(3, amount);
+                PreparedStatement preparedStatement = conn.prepareStatement("UPDATE `student_courses` SET `fees` = ? WHERE `studentID` = ? AND `courseCode` = ?");
+                preparedStatement.setString(1, amount);
+                preparedStatement.setString(2, id);
+                preparedStatement.setString(3, code);
                 // execute the query
                 preparedStatement.executeUpdate();
                 lblMessage.setText("Fee saved!");
@@ -205,7 +204,6 @@ public class FeesManagement extends javax.swing.JFrame {
                 preparedStatement = conn.prepareStatement("SELECT * FROM `student_courses`");
                 ResultSet rs = preparedStatement.executeQuery();
                 // It creates and displays the table
-                //JTable tblFees = new JTable(buildTableModel(rs));
                 tblFees.setModel(Utils.buildTableModel(rs));
                 /* Create and display the form */
             } catch (SQLException ex) {

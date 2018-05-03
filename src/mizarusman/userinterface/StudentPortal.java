@@ -29,7 +29,8 @@ public class StudentPortal extends javax.swing.JFrame {
         initComponents();
         this.userId = userId;
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM `students`");
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM `students` WHERE `userID` = ?");
+            preparedStatement.setString(1, this.userId);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 lblFname.setText(rs.getString("fname"));
@@ -76,6 +77,11 @@ public class StudentPortal extends javax.swing.JFrame {
         lblGradeBook.setText("My Grade Book");
 
         lblRegister.setText("Register Courses");
+        lblRegister.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblRegisterMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,7 +131,7 @@ public class StudentPortal extends javax.swing.JFrame {
                     .addComponent(lblSname, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
@@ -145,6 +151,10 @@ public class StudentPortal extends javax.swing.JFrame {
     private void lblCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCalendarMouseClicked
         new StudentCalendar(userId).setVisible(true);
     }//GEN-LAST:event_lblCalendarMouseClicked
+
+    private void lblRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisterMouseClicked
+        new RegisterCourses(userId).setVisible(true);
+    }//GEN-LAST:event_lblRegisterMouseClicked
 
     /**
      * @param args the command line arguments

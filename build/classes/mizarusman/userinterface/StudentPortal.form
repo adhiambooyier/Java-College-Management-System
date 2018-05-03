@@ -83,7 +83,7 @@
                   <Component id="lblFname" alignment="1" min="-2" pref="27" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lblEmail" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
                   <Component id="lblNumber" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
               </Group>
@@ -134,6 +134,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Register Courses"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblRegisterMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
