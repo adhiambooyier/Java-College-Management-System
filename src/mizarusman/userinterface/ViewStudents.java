@@ -8,8 +8,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import utilities.DbConnection;
 import utilities.Utils;
 
@@ -30,21 +34,30 @@ public class ViewStudents extends javax.swing.JFrame {
         this.courseCode = courseCode;
 
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM `student_courses` WHERE `courseCode` = ?");
+            lblCourse.setText(courseCode);
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT `task_title` FROM `academic_calendar` WHERE `code`=?");
             preparedStatement.setString(1, this.courseCode);
             ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                if (courseCode.equals(rs.getString("courseCode"))) {
-           
-            // It creates and displays the table
-            tblStudents.setModel(Utils.buildTableModel(rs));
-                } else {
-                    lblMessage.setText("Error! No students found");
-                }
-            } else {
-                lblMessage.setText("Error! Course Code not found in database.");
+            Vector<String> columns = new Vector<String>();
+            columns.add("studentID");
+            while (rs.next()) {
+                columns.add(rs.getString("task_title"));
             }
 
+            Vector<Vector<String>> rows = new Vector<>();
+            preparedStatement = conn.prepareStatement("SELECT `studentID` FROM `student_courses` WHERE `courseCode`= ?");
+            preparedStatement.setString(1, this.courseCode);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Vector<String> row = new Vector<>();
+                row.add(rs.getString("studentID"));
+                for (int i = 0; i < columns.size() - 1; i++) {
+                    row.add("");
+                }
+                rows.add(row);
+            }
+
+            tblStudents.setModel(new DefaultTableModel(rows, columns));
         } catch (SQLException ex) {
             Logger.getLogger(FeesManagement.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -66,10 +79,11 @@ public class ViewStudents extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblStudents = new javax.swing.JTable();
         lblMessage = new javax.swing.JLabel();
+        lblCourse = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("VIEW STUDENTS");
+        jLabel1.setText("VIEW STUDENTS FOR");
 
         jLabel2.setText("Search");
 
@@ -90,30 +104,36 @@ public class ViewStudents extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(153, 153, 153))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(47, 47, 47))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(lblCourse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,13 +175,14 @@ public class ViewStudents extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-   
+        new ViewStudents("COMP 302").setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCourse;
     private javax.swing.JLabel lblMessage;
     private javax.swing.JTable tblStudents;
     private javax.swing.JTextField txtSearch;
