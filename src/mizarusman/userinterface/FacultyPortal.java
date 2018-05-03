@@ -38,6 +38,7 @@ public class FacultyPortal extends javax.swing.JFrame {
         lblStudents = new javax.swing.JLabel();
         lblLessonPlan = new javax.swing.JLabel();
         lblCalendar = new javax.swing.JLabel();
+        lblContacts = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -61,6 +62,13 @@ public class FacultyPortal extends javax.swing.JFrame {
             }
         });
 
+        lblContacts.setText("STUDENTS' CONTACTS");
+        lblContacts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblContactsMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,7 +80,10 @@ public class FacultyPortal extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblLessonPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblLessonPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(lblContacts, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(108, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -86,7 +97,9 @@ public class FacultyPortal extends javax.swing.JFrame {
                 .addComponent(lblLessonPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblStudents, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lblContacts, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -99,6 +112,10 @@ public class FacultyPortal extends javax.swing.JFrame {
     private void lblCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCalendarMouseClicked
         new ManageCalendar().setVisible(true);
     }//GEN-LAST:event_lblCalendarMouseClicked
+
+    private void lblContactsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblContactsMouseClicked
+       new StudentContacts(userId).setVisible(true);
+    }//GEN-LAST:event_lblContactsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -135,6 +152,7 @@ public class FacultyPortal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lblCalendar;
+    private javax.swing.JLabel lblContacts;
     private javax.swing.JLabel lblLessonPlan;
     private javax.swing.JLabel lblStudents;
     // End of variables declaration//GEN-END:variables

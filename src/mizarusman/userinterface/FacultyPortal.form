@@ -39,6 +39,10 @@
                       <Component id="jLabel1" min="-2" pref="174" max="-2" attributes="0"/>
                       <Component id="lblLessonPlan" alignment="1" min="-2" pref="203" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                      <Component id="lblContacts" min="-2" pref="155" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="108" max="32767" attributes="0"/>
           </Group>
@@ -55,7 +59,9 @@
               <Component id="lblLessonPlan" min="-2" pref="28" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="lblStudents" min="-2" pref="36" max="-2" attributes="0"/>
-              <EmptySpace pref="91" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="lblContacts" min="-2" pref="26" max="-2" attributes="0"/>
+              <EmptySpace pref="47" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -85,6 +91,14 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCalendarMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblContacts">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="STUDENTS&apos; CONTACTS"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblContactsMouseClicked"/>
       </Events>
     </Component>
   </SubComponents>
