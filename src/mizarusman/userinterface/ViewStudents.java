@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import utilities.DbConnection;
 import utilities.Utils;
@@ -52,19 +54,58 @@ public class ViewStudents extends javax.swing.JFrame {
                 Vector<String> row = new Vector<>();
                 String studentID = rs.getString("studentID");
                 row.add(studentID);
-              
+
                 for (int i = 0; i < columns.size() - 1; i++) {
                     preparedStatement = conn.prepareStatement("SELECT `score` FROM `student_grades` WHERE `courseCode` = ? AND `studentID` = ? AND `taskTitle` = ?");
                     preparedStatement.setString(1, this.courseCode);
                     preparedStatement.setString(2, studentID);
-                    preparedStatement.setString(3, columns.get(i+1));
-                    rs = preparedStatement.executeQuery();
-                    row.add("");
+                    preparedStatement.setString(3, columns.get(i + 1));
+                    ResultSet rsScore = preparedStatement.executeQuery();
+                    if (rsScore.next()) {
+                        row.add(rsScore.getString("score"));
+                    }
                 }
                 rows.add(row);
             }
+            DefaultTableModel tableModel = new DefaultTableModel(rows, columns);
+            tableModel.addTableModelListener(new TableModelListener() {
+                @Override
+                public void tableChanged(TableModelEvent tme) {
+                    if (tme.getColumn() != 0) {
 
-            tblStudents.setModel(new DefaultTableModel(rows, columns));
+                        DefaultTableModel dtm = (DefaultTableModel) tme.getSource();
+                        String value = (String) dtm.getValueAt(tme.getFirstRow(), tme.getColumn());
+                        String studentID = (String) dtm.getValueAt(tme.getFirstRow(), 0);
+                        String taskTitle = columns.get(tme.getColumn());
+                        try {
+                            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM `student_grades` WHERE `studentID` = ? AND `taskTitle` = ?");
+                            preparedStatement.setInt(1, Integer.parseInt(studentID));
+                            preparedStatement.setString(2, taskTitle);
+                            ResultSet rs = preparedStatement.executeQuery();
+                            rs.last();
+                            int rowCount = rs.getRow();
+                            if (rowCount < 1) {
+                                preparedStatement = conn.prepareStatement("INSERT INTO `student_grades` (`courseCode`, `studentID`, `taskTitle`, `score`) VALUES (?,?,?,?)");
+                                preparedStatement.setString(1, courseCode);
+                                preparedStatement.setInt(2, Integer.parseInt(studentID));
+                                preparedStatement.setString(3, taskTitle);
+                                preparedStatement.setInt(4, Integer.parseInt(value));
+                                preparedStatement.executeUpdate();
+                            } else {
+                                preparedStatement = conn.prepareStatement("UPDATE `student_grades` SET `score`= ? WHERE `studentID` = ? AND `taskTitle` = ?");
+                                preparedStatement.setString(1, value);
+                                preparedStatement.setInt(2, Integer.parseInt(studentID));
+                                preparedStatement.setString(3, taskTitle);
+                                preparedStatement.executeUpdate();
+                            }
+
+                        } catch (SQLException ex) {
+                            Logger.getLogger(ViewStudents.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            });
+            tblStudents.setModel(tableModel);
         } catch (SQLException ex) {
             Logger.getLogger(ViewStudents.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -87,10 +128,11 @@ public class ViewStudents extends javax.swing.JFrame {
         tblStudents = new javax.swing.JTable();
         lblMessage = new javax.swing.JLabel();
         lblCourse = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("VIEW STUDENTS FOR");
+        jLabel1.setText("MANAGE GRADES FOR");
 
         jLabel2.setText("Search");
 
@@ -107,6 +149,8 @@ public class ViewStudents extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblStudents);
 
+        jLabel3.setText("Click cell to make or update an entry");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,18 +165,20 @@ public class ViewStudents extends javax.swing.JFrame {
                         .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(47, 47, 47))))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(77, 77, 77)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(43, 43, 43)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lblCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,9 +191,11 @@ public class ViewStudents extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                 .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -182,12 +230,12 @@ public class ViewStudents extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        new ViewStudents("COMP 302").setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCourse;
     private javax.swing.JLabel lblMessage;

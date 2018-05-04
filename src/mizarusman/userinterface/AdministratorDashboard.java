@@ -33,7 +33,7 @@ public class AdministratorDashboard extends javax.swing.JFrame {
         lblFees = new javax.swing.JLabel();
         lblMessage = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("WELCOME TO YOUR ADMIN PANEL");
 

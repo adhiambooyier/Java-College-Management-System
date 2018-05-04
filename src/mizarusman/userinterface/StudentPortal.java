@@ -63,7 +63,7 @@ public class StudentPortal extends javax.swing.JFrame {
         lblGradeBook = new javax.swing.JLabel();
         lblRegister = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("WELCOME TO YOUR PORTAL,");
 
