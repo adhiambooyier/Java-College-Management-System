@@ -50,8 +50,15 @@ public class ViewStudents extends javax.swing.JFrame {
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Vector<String> row = new Vector<>();
-                row.add(rs.getString("studentID"));
+                String studentID = rs.getString("studentID");
+                row.add(studentID);
+              
                 for (int i = 0; i < columns.size() - 1; i++) {
+                    preparedStatement = conn.prepareStatement("SELECT `score` FROM `student_grades` WHERE `courseCode` = ? AND `studentID` = ? AND `taskTitle` = ?");
+                    preparedStatement.setString(1, this.courseCode);
+                    preparedStatement.setString(2, studentID);
+                    preparedStatement.setString(3, columns.get(i+1));
+                    rs = preparedStatement.executeQuery();
                     row.add("");
                 }
                 rows.add(row);
@@ -59,7 +66,7 @@ public class ViewStudents extends javax.swing.JFrame {
 
             tblStudents.setModel(new DefaultTableModel(rows, columns));
         } catch (SQLException ex) {
-            Logger.getLogger(FeesManagement.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewStudents.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
