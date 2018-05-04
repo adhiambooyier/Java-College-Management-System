@@ -129,6 +129,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="My Grade Book"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblGradeBookMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblRegister">
       <Properties>

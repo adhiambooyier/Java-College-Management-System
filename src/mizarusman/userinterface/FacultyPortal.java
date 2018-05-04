@@ -145,7 +145,6 @@ public class FacultyPortal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        new FacultyPortal("1234").setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

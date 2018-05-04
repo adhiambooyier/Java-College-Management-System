@@ -75,6 +75,11 @@ public class StudentPortal extends javax.swing.JFrame {
         });
 
         lblGradeBook.setText("My Grade Book");
+        lblGradeBook.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblGradeBookMouseClicked(evt);
+            }
+        });
 
         lblRegister.setText("Register Courses");
         lblRegister.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -156,6 +161,10 @@ public class StudentPortal extends javax.swing.JFrame {
         new RegisterCourses(userId).setVisible(true);
     }//GEN-LAST:event_lblRegisterMouseClicked
 
+    private void lblGradeBookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGradeBookMouseClicked
+        new MyGradeBook(userId).setVisible(true);
+    }//GEN-LAST:event_lblGradeBookMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -167,7 +176,7 @@ public class StudentPortal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

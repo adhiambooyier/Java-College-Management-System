@@ -141,11 +141,11 @@ public class StudentsByCourse extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCourse1MouseClicked
 
     private void lblCourse2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCourse2MouseClicked
-        new ViewStudents(lblCourse1.getText()).setVisible(true);
+        new ViewStudents(lblCourse2.getText()).setVisible(true);
     }//GEN-LAST:event_lblCourse2MouseClicked
 
     private void lblCourse3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCourse3MouseClicked
-        new ViewStudents(lblCourse1.getText()).setVisible(true);
+        new ViewStudents(lblCourse3.getText()).setVisible(true);
     }//GEN-LAST:event_lblCourse3MouseClicked
 
     /**
