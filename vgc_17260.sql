@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2018 at 08:58 AM
+-- Generation Time: May 04, 2018 at 10:01 PM
 -- Server version: 5.7.16-log
 -- PHP Version: 5.6.25
 
@@ -87,7 +87,8 @@ INSERT INTO `courses` (`id`, `code`, `title`, `fee`, `description`) VALUES
 (1, 'COMP 302', 'ALGORITHM ANALYSIS', 3000, 'Analysis of time and speed of algorithms using several oop languages'),
 (2, 'COMP 320', 'EMMERGING TECHNOLOGIES', 2300, 'This theoretical course covers a variety of emmerging trends in the tech world.'),
 (3, 'COMP 111', 'TECH AND SOCIETY', 3000, 'Tech and its effects'),
-(4, 'COMP 307', 'WEB TECHNOLOGIES', 2000, 'JAvScript, php, html and css');
+(4, 'COMP 307', 'WEB TECHNOLOGIES', 2000, 'JAvScript, php, html and css'),
+(5, 'ACMP 230', 'ARTIFICIAL INTELLIGENCE', 2000, 'Explore the basics of AI and its applications');
 
 -- --------------------------------------------------------
 
@@ -111,7 +112,8 @@ CREATE TABLE `faculty` (
 --
 
 INSERT INTO `faculty` (`id`, `userID`, `fname`, `lname`, `password`, `course1`, `course2`, `course3`) VALUES
-(1, 1234, 'Moses', 'Momanyi', 'faculty', 'COMP 302', 'COMP 320', 'COMP 308');
+(1, 1234, 'Moses', 'Momanyi', 'faculty', 'COMP 302', 'COMP 320', 'COMP 308'),
+(2, 9876, 'Verah', 'Lynn', 'faculty', 'COMP 111', 'ACMP 230', 'ACMP 230');
 
 -- --------------------------------------------------------
 
@@ -136,7 +138,8 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`id`, `userID`, `fname`, `lname`, `enrollmentYear`, `password`, `email`, `fee`) VALUES
 (1, 12345, 'Harly', 'quinn', 2015, '987654321', 'quinnh@ymail.com', 2000),
-(3, 15678, 'Baby', 'Boo', 2012, '987654321', 'babyboo', 4000);
+(3, 15678, 'Baby', 'Boo', 2012, '987654321', 'babyboo', 4000),
+(4, 56789, 'Robin', 'Hood', 2017, '987654321', 'robinhood@vigilntes.com', 2000);
 
 -- --------------------------------------------------------
 
@@ -148,21 +151,25 @@ CREATE TABLE `student_courses` (
   `id` int(11) NOT NULL,
   `studentID` int(11) NOT NULL,
   `courseCode` varchar(255) NOT NULL,
-  `fees` double NOT NULL DEFAULT '0'
+  `fees` double NOT NULL DEFAULT '0',
+  `attendanceRecord` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `student_courses`
 --
 
-INSERT INTO `student_courses` (`id`, `studentID`, `courseCode`, `fees`) VALUES
-(1, 15678, 'COMP 302', 1200),
-(2, 27899, 'COMP 302', 10000),
-(3, 7989, 'COMP 302', 1299),
-(4, 15678, 'COMP 320', 1000),
-(5, 15678, 'COMP 307', 1200),
-(8, 15678, 'COMP 111', 2000),
-(9, 12345, 'COMP 111', 0);
+INSERT INTO `student_courses` (`id`, `studentID`, `courseCode`, `fees`, `attendanceRecord`) VALUES
+(1, 15678, 'COMP 302', 1200, 0),
+(2, 27899, 'COMP 302', 10000, 0),
+(3, 7989, 'COMP 302', 1299, 0),
+(4, 15678, 'COMP 320', 1000, 0),
+(5, 15678, 'COMP 307', 1200, 0),
+(8, 15678, 'COMP 111', 2000, 0),
+(9, 12345, 'COMP 111', 0, 0),
+(10, 12345, 'COMP 302', 0, 0),
+(11, 56789, 'COMP 308', 0, 0),
+(12, 56789, 'COMP 320', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -177,6 +184,18 @@ CREATE TABLE `student_grades` (
   `score` int(11) NOT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `student_grades`
+--
+
+INSERT INTO `student_grades` (`courseCode`, `studentID`, `taskTitle`, `score`, `id`) VALUES
+('COMP 302', 15678, 'ASSG ONE', 23, 2),
+('COMP 302', 15678, 'PRACTICAL LAB', 21, 3),
+('COMP 302', 27899, 'PRACTICAL LAB', 24, 4),
+('COMP 302', 27899, 'ASSG ONE', 18, 5),
+('COMP 302', 7989, 'ASSG ONE', 22, 6),
+('COMP 302', 7989, 'PRACTICAL LAB', 16, 7);
 
 --
 -- Indexes for dumped tables
@@ -242,27 +261,27 @@ ALTER TABLE `administrators`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `faculty`
 --
 ALTER TABLE `faculty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `student_courses`
 --
 ALTER TABLE `student_courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `student_grades`
 --
 ALTER TABLE `student_grades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
