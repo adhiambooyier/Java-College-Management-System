@@ -54,6 +54,11 @@ public class FacultyPortal extends javax.swing.JFrame {
         });
 
         lblLessonPlan.setText("MANAGE COURSE ATTENDANCE");
+        lblLessonPlan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLessonPlanMouseClicked(evt);
+            }
+        });
 
         lblCalendar.setText("MANAGE ACADEMIIC CALENDAR");
         lblCalendar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -116,6 +121,10 @@ public class FacultyPortal extends javax.swing.JFrame {
     private void lblContactsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblContactsMouseClicked
        new StudentContacts(userId).setVisible(true);
     }//GEN-LAST:event_lblContactsMouseClicked
+
+    private void lblLessonPlanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLessonPlanMouseClicked
+        new CourseAttendance(userId).setVisible(true);
+    }//GEN-LAST:event_lblLessonPlanMouseClicked
 
     /**
      * @param args the command line arguments

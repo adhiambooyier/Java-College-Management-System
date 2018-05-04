@@ -140,7 +140,6 @@ public class StudentContacts extends javax.swing.JFrame {
 
     private void btnviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnviewActionPerformed
         String courseCode = txtCourseCode.getSelectedItem().toString();
-        System.out.print(courseCode);
         try {
             PreparedStatement preparedStatement = conn.prepareStatement("SELECT `course1`, `course2`, `course3` FROM `faculty` WHERE `userID` = ?");
             preparedStatement.setString(1, this.userId);
