@@ -16,7 +16,7 @@ import javax.swing.table.TableModel;
  * @author user
  */
 public class Utils {
-    public static TableModel buildTableModel(ResultSet rs)
+    public static DefaultTableModel buildTableModel(ResultSet rs)
             throws SQLException {
         ResultSetMetaData metaData = rs.getMetaData();
         // names of columns

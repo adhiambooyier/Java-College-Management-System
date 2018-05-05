@@ -10,9 +10,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import utilities.DbConnection;
 import utilities.Utils;
@@ -25,6 +29,7 @@ public class CourseAttendance extends javax.swing.JFrame {
 
     String userId;
     Connection conn = DbConnection.getConnection();
+    boolean isCellChange = true;
 
     /**
      * Creates new form CourseAttendance
@@ -42,28 +47,102 @@ public class CourseAttendance extends javax.swing.JFrame {
                 courses.add(rs.getString("course1"));
                 courses.add(rs.getString("course2"));
                 courses.add(rs.getString("course3"));
+                isCellChange = false;
+                buildTable(rs.getString("course1"));
+                isCellChange = true;
             }
             cbCourses.setModel(new javax.swing.DefaultComboBoxModel<>(courses));
             cbCourses.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    try {
-                        String courseCode = cbCourses.getSelectedItem().toString();
-                        if (courseCode.equals(rs.getString("course1")) || courseCode.equals(rs.getString("course2")) || courseCode.equals(rs.getString("course3"))) {
-                            PreparedStatement preparedStatement = conn.prepareStatement("SELECT student_courses.studentID, student_courses.courseCode, students.fname, students.lname, student_courses.attendanceRecord FROM student_courses INNER JOIN students ON students.userID = student_courses.studentID WHERE student_courses.courseCode = ? ");
-                            preparedStatement.setString(1, courseCode);
-                            ResultSet rs = preparedStatement.executeQuery();
-                            // creates and displays the table
-                            tblAttendance.setModel(Utils.buildTableModel(rs));
-                        }
-                    } catch (SQLException ex) {
-                        Logger.getLogger(CourseAttendance.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    isCellChange = false;
+                    buildTable(cbCourses.getSelectedItem().toString());
+                    isCellChange = true;
                 }
             });
 
         } catch (SQLException ex) {
             Logger.getLogger(CourseAttendance.class.getName()).log(Level.SEVERE, null, ex);
 
+        }
+    }
+
+    public void buildTable(String courseCode) {
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT student_courses.studentID, students.fname, students.lname, student_courses.attendanceRecord FROM student_courses INNER JOIN students ON students.userID = student_courses.studentID WHERE student_courses.courseCode = ? ");
+            preparedStatement.setString(1, courseCode);
+            ResultSet rs = preparedStatement.executeQuery();
+            // creates and displays the table
+            DefaultTableModel dtm = new DefaultTableModel() {
+                @Override
+                public Class<?> getColumnClass(int column) {
+                    switch (column) {
+                        case 3:
+                            return Integer.class;
+
+                        case 4:
+                            return Boolean.class;
+
+                        default:
+                            return String.class;
+                    }
+                }
+            };
+
+            dtm.addTableModelListener(new TableModelListener() {
+                @Override
+                public void tableChanged(TableModelEvent tme) {
+                    if (isCellChange) {
+                        if (tme.getColumn() == 4) {
+                            DefaultTableModel dtmI = (DefaultTableModel) tme.getSource();
+                            Boolean inClass = (Boolean) dtmI.getValueAt(tme.getLastRow(), 4);
+                            String studentID = (String) dtmI.getValueAt(tme.getFirstRow(), 0);
+                            Integer attendanceRecord = Integer.parseInt((String) dtmI.getValueAt(tme.getFirstRow(), 3));
+
+                            if (inClass) {
+                                try {
+                                    PreparedStatement preparedStat = conn.prepareStatement("UPDATE `student_courses` SET `attendanceRecord`=`attendanceRecord`+1 WHERE `studentID`=? AND `courseCode`=?");
+                                    preparedStat.setString(1, studentID);
+                                    preparedStat.setString(2, courseCode);
+                                    preparedStat.executeUpdate();
+                                    dtmI.setValueAt(String.valueOf(attendanceRecord + 1), tme.getFirstRow(), 3);
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(CourseAttendance.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            } else {
+                                try {
+                                    PreparedStatement preparedStat = conn.prepareStatement("UPDATE `student_courses` SET `attendanceRecord`=`attendanceRecord`-1 WHERE `studentID`=? AND `courseCode`=?");
+                                    preparedStat.setString(1, studentID);
+                                    preparedStat.setString(2, courseCode);
+                                    preparedStat.executeUpdate();
+                                    dtmI.setValueAt(String.valueOf(attendanceRecord - 1), tme.getFirstRow(), 3);
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(CourseAttendance.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            dtm.addColumn("Student ID");
+            dtm.addColumn("First Name");
+            dtm.addColumn("Surname");
+            dtm.addColumn("Attendance Record");
+            dtm.addColumn("In Class");
+
+            int rowIndex = 0;
+            while (rs.next()) {
+                dtm.addRow(new Object[0]);
+                dtm.setValueAt(rs.getString("studentID"), rowIndex, 0);
+                dtm.setValueAt(rs.getString("fname"), rowIndex, 1);
+                dtm.setValueAt(rs.getString("lname"), rowIndex, 2);
+                dtm.setValueAt(rs.getString("attendanceRecord"), rowIndex, 3);
+                dtm.setValueAt(false, rowIndex, 4);
+                rowIndex++;
+            }
+            tblAttendance.setModel(dtm);
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseAttendance.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -81,7 +160,7 @@ public class CourseAttendance extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAttendance = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("COURSE ATTENDANCE FOR");
 
@@ -157,7 +236,8 @@ public class CourseAttendance extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-       
+        new CourseAttendance("1234").setVisible(true);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
