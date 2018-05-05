@@ -25,7 +25,7 @@ public class FeesManagement extends javax.swing.JFrame {
     public FeesManagement() {
         initComponents();
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM `student_courses`");
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT `studentID`, students.fname, students.lname, `courseCode`, `fees` FROM `student_courses` INNER JOIN students ON student_courses.studentID = students.userID ");
             ResultSet rs = preparedStatement.executeQuery();
             // It creates and displays the table
             tblFees.setModel(Utils.buildTableModel(rs));
@@ -56,7 +56,7 @@ public class FeesManagement extends javax.swing.JFrame {
         tblFees = new javax.swing.JTable();
         lblMessage = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Student ID");
 
@@ -175,7 +175,7 @@ public class FeesManagement extends javax.swing.JFrame {
                 preparedStatement.executeUpdate();
                 lblMessage.setText("Fee saved!");
 
-                preparedStatement = conn.prepareStatement("SELECT * FROM `student_courses`");
+                preparedStatement = conn.prepareStatement("SELECT `studentID`, students.fname, students.lname, `courseCode`, `fees` FROM `student_courses` INNER JOIN students ON student_courses.studentID = students.userID ");
                 ResultSet rs = preparedStatement.executeQuery();
                 // It creates and displays the table
                 tblFees.setModel(Utils.buildTableModel(rs));
