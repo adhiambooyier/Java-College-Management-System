@@ -236,7 +236,6 @@ public class CourseAttendance extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        new CourseAttendance("1234").setVisible(true);
 
     }
 
