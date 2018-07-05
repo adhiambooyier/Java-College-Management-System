@@ -1,8 +1,7 @@
 # OWNERSHIP
 this project is owned by 
-**Mizar Usman**
-**No: 17260**
-Submitted for *Concepts, design and implementation of a web application* course.
+**Adhiambo Oyier**
+Learning *Java Swing Concepts*
 
 # SET-UP
 
